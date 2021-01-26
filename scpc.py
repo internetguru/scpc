@@ -26,12 +26,12 @@ def loadInputMatrix ():
 
 # load and validate matrix from stdin
 matrix = loadInputMatrix()
-flattern_matrix = [item for sublist in matrix for item in sublist]
-if not isConsecutive(flattern_matrix):
+matrix_flat = [item for sublist in matrix for item in sublist]
+if not isConsecutive(matrix_flat):
   exception("Input matrix is not consecutive")
 
 # load and validate verticies
-number_of_vertices = max(flattern_matrix)
+number_of_vertices = max(matrix_flat)
 if number_of_vertices < 2 or number_of_vertices > 10:
   exception("Number of verticies must be in range <2,10>")
 
