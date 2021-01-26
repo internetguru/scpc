@@ -9,7 +9,6 @@ parser.add_option("-p", "--property", action="store", dest="property",
                   help="Property to analyze. Valid properties are %s. Default property is %s" % (properties, properties[0]))
 (options, args) = parser.parse_args()
 
-
 # functions
 def exception (str, code=1):
   # TODO print prefix according to code, e.g. invalid input
@@ -17,7 +16,7 @@ def exception (str, code=1):
   sys.exit(code)
 
 def isConsecutive (numList):
-  return sorted(numList) == list(range(min(numList), max(numList) + 1))
+  return sorted(set(numList)) == list(range(min(numList), max(numList) + 1))
 
 def loadInputMatrix ():
   matrix = []
@@ -35,5 +34,4 @@ if not isConsecutive(flattern_matrix):
 number_of_vertices = max(flattern_matrix)
 if number_of_vertices < 2 or number_of_vertices > 10:
   exception("Number of verticies must be in range <2,10>")
-
 
