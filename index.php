@@ -12,7 +12,7 @@ foreach($properities as $property) {
 
 $output = "---";
 if (isset($_POST['input']) && isset($_POST['property'])) {
-  $output = shell_exec("echo \"{$_POST['input']}\" | /usr/local/bin/python3.7 scpc.py -p {$_POST['property']} 2>&1");
+  $output = shell_exec("echo \"{$_POST['input']}\" | /usr/local/bin/python3.7 scpc.py --property {$_POST['property']} 2>&1");
 }
 
 $commit_id = substr(shell_exec("/usr/local/bin/git rev-parse HEAD"), 0, 7);
