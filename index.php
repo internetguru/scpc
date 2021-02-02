@@ -17,15 +17,19 @@ if (isset($_POST['input']) && isset($_POST['property'])) {
 
 $commit_id = substr(shell_exec("/usr/local/bin/git rev-parse HEAD"), 0, 7);
 
+$python_file = file("scpc.py");
+$heading = substr($python_file[5], 4);
+$desc = substr($python_file[7], 2);
+
 echo <<<EOT
 <html>
   <head>
-    <title>Simplicial Complex Property Check</title>
+    <title>$heading</title>
     <meta charset='UTF-8'/>
   </head>
   <body>
-    <h1>Simplicial Complex Property Check</h1>
-    <p>This program provides simplicial complex checks on under-closed, semi-closed, weakly-closed, d-chodral, closed, and almost-closed properties. To use it, simply enter a list of facets of a simplicial complex and select desired property.</p>
+    <h1>$heading</h1>
+    <p>$desc</p>
     <h2>Program Input</h2>
     <form method="POST" action="">
       <dl>
