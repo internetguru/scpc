@@ -22,6 +22,7 @@ $heading = substr($python_file[5], 4);
 $desc = substr($python_file[7], 2);
 
 echo <<<EOT
+<!DOCTYPE html>
 <html>
   <head>
     <title>$heading</title>
