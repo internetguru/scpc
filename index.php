@@ -45,8 +45,8 @@ echo <<<EOT
     <pre><code>$output</code></pre>
     <hr/>
     <ul>
-      <li><a href="https://colab.research.google.com/github/martapavelka/scpc/blob/main/scpc.ipynb">Source code on Google Colab (developer version)</a></li>
-      <li><a href="https://github.com/martapavelka/scpc">Source code on GitHub (all versions)</a></li>
+      <li><a href="https://colab.research.google.com/github/martapavelka/scpc/blob/main/scpc.ipynb">Source code on Google Colab</a> (developer version)</li>
+      <li><a href="https://github.com/martapavelka/scpc">Source code on GitHub</a> (all versions)</li>
       <li>Current version commit id: $commit_id</li>
     </ul>
 
@@ -59,5 +59,3 @@ echo <<<EOT
       gtag('config', 'G-S1ZRPY85CD');
     </script>
 EOT;
-
-
