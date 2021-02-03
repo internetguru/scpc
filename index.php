@@ -34,7 +34,7 @@ echo <<<EOT
     <h2>Program Input</h2>
     <form method="POST" action="">
       <dl>
-        <dt>Input matrix</dt>
+        <dt>Input matrix.</dt>
 	<dd><textarea name="input" rows="10" cols="20">$input</textarea></dd>
 	<dt>Properities</dt>
         <dd><select name="property">$options</select></dd>
