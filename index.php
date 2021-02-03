@@ -49,6 +49,7 @@ echo <<<EOT
       <li><a href="https://colab.research.google.com/github/martapavelka/scpc/blob/main/scpc.ipynb">Source code on Google Colab</a> (developer version)</li>
       <li><a href="https://github.com/martapavelka/scpc">Source code on GitHub</a> (all versions)</li>
       <li>Current online version commit: $commit_id</li>
+      <li>Author: Marta Pavelka, <a href="mailto:pavelka@math.miami.edu">pavelka@math.miami.edu</a></li>
     </ul>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
