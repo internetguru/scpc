@@ -2,7 +2,7 @@
 
 $input = $_POST['input'] ?? "1 2 3 4&#10;2 3 4 5&#10;5 6 7 8";
 
-$properties = ["all", "under-closed", "semi-closed", "weakly-closed", "d-chordal", "closed", "almost-closed"];
+$properties = ["all", "under-closed", "semi-closed", "weakly-closed", "chordal", "closed", "almost-closed"];
 $options = "";
 foreach($properties as $property) {
   $options .= "<option"
