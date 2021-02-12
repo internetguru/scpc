@@ -3,11 +3,11 @@
 $input = $_POST['input'] ?? "1 2 3 4&#10;2 3 4 5&#10;5 6 7 8";
 
 $properities = ["all", "under-closed", "semi-closed", "weakly-closed", "d-chordal", "closed", "almost-closed"];
-$options = "";
+$radios = "";
 foreach($properities as $property) {
-  $options .= "<option"
-    . (isset($_POST['property']) && $_POST['property'] == $property ? " selected" : "")
-    . ">$property</option>";
+  $radios .= "<label><input type='radio' name='property' value='$property'"
+    . (isset($_POST['property']) && $_POST['property'] == $property ? " checked" : "")
+    . "/> $property</label>";
 }
 
 $output = "---";
@@ -37,7 +37,7 @@ echo <<<EOT
         <dt>Input matrix</dt>
 	<dd><textarea name="input" rows="10" cols="20">$input</textarea></dd>
 	<dt>Properities</dt>
-        <dd><select name="property">$options</select></dd>
+        <dd>$radios</dd>
         <dt>Send form</dt>
         <dd><input type="submit" value="Submit" /></dd>
       </dl>
