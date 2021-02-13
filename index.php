@@ -65,6 +65,13 @@ function execute ($cmd, $stdin = null, &$stdout, &$stderr, $timeout = false) {
     usleep(100000);
   }
   return 1;
+
+$properties = ["all", "under-closed", "semi-closed", "weakly-closed", "chordal", "closed", "almost-closed"];
+$options = "";
+foreach($properties as $property) {
+  $options .= "<option"
+    . (isset($_POST['property']) && $_POST['property'] == $property ? " selected" : "")
+    . ">$property</option>";
 }
 
 $output = "---";
@@ -115,9 +122,10 @@ echo <<<EOT
     <form method="POST" action="">
       <dl>
         <dt>Input matrix</dt>
-	<dd><textarea name="input" rows="10" cols="20">$input</textarea></dd>
-	<dt>Properties</dt>
+      	<dd><textarea name="input" rows="10" cols="20">$input</textarea></dd>
+      	<dt>Properties</dt>
         <dd>$radios</dd>
+        <dd><select name="property">$options</select></dd>
         <dt>Send form</dt>
         <dd><input type="submit" value="Submit" /></dd>
       </dl>
