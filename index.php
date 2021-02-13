@@ -1,11 +1,11 @@
 <?php
 
 $input = $_POST['input'] ?? "1 2 3 4&#10;2 3 4 5&#10;5 6 7 8";
-$properties = ["all", "under-closed", "semi-closed", "weakly-closed", "d-chordal", "closed", "almost-closed"];
+$properties = ["all", "under-closed", "semi-closed", "weakly-closed", "chordal", "closed", "almost-closed"];
 $log = "log.txt";
 $status_ok = "done";
 $status_size = "max_size_exceeded";
-$status_size = "timeout_exceeded";
+$status_timeout = "timeout_exceeded";
 $max_input_size = 1000;
 $timeout = 15;
 
@@ -13,7 +13,7 @@ function getClientIP () {
   $keys = array('HTTP_CLIENT_IP','HTTP_X_FORWARDED_FOR','HTTP_X_FORWARDED',
     'HTTP_FORWARDED_FOR','HTTP_FORWARDED','REMOTE_ADDR');
   foreach($keys as $key) {
-    if (!empty($_SERVER[$key]) && filter_var($_SERVER[$key], FILTER_VALIDATE_IP)) {
+    if (!empty($_SERVER[$key])) {
       return $_SERVER[$key];
     }
   }
@@ -21,8 +21,9 @@ function getClientIP () {
 }
 
 function log_status ($status) {
+  global $log, $input;
   $date = new DateTime();
-  file_put_contents($log, sprintf("%s (%s): %s [ %s ]",
+  file_put_contents($log, sprintf("%s (%s): %s [ %s ]\n",
     $date->getTimestamp(), getClientIP(), $input, $status), FILE_APPEND | LOCK_EX);
 }
 
@@ -65,13 +66,6 @@ function execute ($cmd, $stdin = null, &$stdout, &$stderr, $timeout = false) {
     usleep(100000);
   }
   return 1;
-
-$properties = ["all", "under-closed", "semi-closed", "weakly-closed", "chordal", "closed", "almost-closed"];
-$options = "";
-foreach($properties as $property) {
-  $options .= "<option"
-    . (isset($_POST['property']) && $_POST['property'] == $property ? " selected" : "")
-    . ">$property</option>";
 }
 
 $output = "---";
@@ -98,7 +92,7 @@ try {
 $radios = "";
 foreach($properties as $property) {
   $radios .= "<label><input type='radio' name='property' value='$property'"
-    . (isset($_POST['property']) && $_POST['property'] == $property ? " checked" : "")
+    . ((isset($_POST['property']) && $_POST['property'] == $property) || $property == "all" ? " checked" : "")
     . "/> $property</label>";
 }
 
@@ -125,7 +119,6 @@ echo <<<EOT
       	<dd><textarea name="input" rows="10" cols="20">$input</textarea></dd>
       	<dt>Properties</dt>
         <dd>$radios</dd>
-        <dd><select name="property">$options</select></dd>
         <dt>Send form</dt>
         <dd><input type="submit" value="Submit" /></dd>
       </dl>
