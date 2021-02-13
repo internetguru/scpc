@@ -71,7 +71,7 @@ function execute ($cmd, $stdin = null, &$stdout, &$stderr, $timeout = false) {
 $output = "---";
 try {
   if (isset($_POST['input']) && isset($_POST['property'])) {
-    if (strlen($_POST['input']) > 1000) {
+    if (strlen($_POST['input']) > $max_input_size) {
       log_status($status_size);
       throw new Exception("Input matrix is to big");
     }
