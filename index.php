@@ -91,9 +91,9 @@ try {
 
 $radios = "";
 foreach($properties as $property) {
-  $radios .= "<label><input type='radio' name='property' value='$property'"
+  $radios .= "<dd><label><input type='radio' name='property' value='$property'"
     . ((isset($_POST['property']) && $_POST['property'] == $property) || $property == "all" ? " checked" : "")
-    . "/> $property</label>";
+    . "/> $property</label></dd>";
 }
 
 $commit_id = substr(shell_exec("/usr/local/bin/git rev-parse HEAD"), 0, 7);
@@ -118,7 +118,7 @@ echo <<<EOT
         <dt>Input matrix</dt>
       	<dd><textarea name="input" rows="10" cols="20">$input</textarea></dd>
       	<dt>Properties</dt>
-        <dd>$radios</dd>
+        $radios
         <dt>Send form</dt>
         <dd><input type="submit" value="Submit" /></dd>
       </dl>
