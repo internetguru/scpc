@@ -7,7 +7,7 @@ $status_ok = "done";
 $status_size = "max_size_exceeded";
 $status_timeout = "timeout_exceeded";
 $max_input_size = 1000;
-$timeout = 15;
+$timeout = 30;
 
 function getClientIP () {
   $keys = array('HTTP_CLIENT_IP','HTTP_X_FORWARDED_FOR','HTTP_X_FORWARDED',
