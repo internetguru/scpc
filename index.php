@@ -100,7 +100,7 @@ $commit_id = substr(shell_exec("/usr/local/bin/git rev-parse HEAD"), 0, 7);
 
 $python_file = file("scpc.py");
 $heading = substr($python_file[5], 4);
-$desc = substr($python_file[9], 2);
+$desc = substr($python_file[7], 2);
 
 echo <<<EOT
 <!DOCTYPE html>
