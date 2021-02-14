@@ -102,7 +102,7 @@ $python_file = file("scpc.py");
 $heading = substr($python_file[5], 4);
 $line_num = 6;
 $desc = "";
-while ($python_file[$line_num++] != "") {
+while ($python_file[$line_num++] != "\n") {
   $desc .= '<p>'.substr($python_file[$line_num++], 2).'</p>';
 }
 
