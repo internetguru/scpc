@@ -100,7 +100,11 @@ $commit_id = substr(shell_exec("/usr/local/bin/git rev-parse HEAD"), 0, 7);
 
 $python_file = file("scpc.py");
 $heading = substr($python_file[5], 4);
-$desc = substr($python_file[7], 2);
+$line_num = 6;
+$desc = "";
+while ($python_file[$line_num++] != "") {
+  $desc .= '<p>'.substr($python_file[$line_num++], 2).'</p>';
+}
 
 echo <<<EOT
 <!DOCTYPE html>
@@ -111,7 +115,7 @@ echo <<<EOT
   </head>
   <body>
     <h1>$heading</h1>
-    <p>$desc</p>
+    $desc
     <h2>Program Input</h2>
     <form method="POST" action="">
       <dl>
