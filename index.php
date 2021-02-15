@@ -1,6 +1,6 @@
 <?php
 
-$input = $_POST['input'] ?? "1 2 3 4&#10;2 3 4 5&#10;5 6 7 8";
+$input = $_POST['input'] ?? "1 2 3 4&#10;1 3 4 5&#10;1 2 4 5&#10;2 4 5 6";
 $properties = ["all", "under-closed", "semi-closed", "weakly-closed", "chordal", "closed", "almost-closed"];
 $log = "log.txt";
 $status_ok = "done";
