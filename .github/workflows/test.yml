@@ -24,6 +24,6 @@ jobs:
         curl -sL https://github.com/InternetGuru/butt/releases/download/v0.3.0/butt.sh > butt
         chmod +x butt
     - name: Run scpc tests
-      run: butt -vw. test/test.butt
+      run: ./butt -vw. test/test.butt
       env:
         TERM: dumb
