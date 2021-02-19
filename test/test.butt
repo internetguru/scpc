@@ -1,0 +1,19 @@
+#!/bin/bash
+
+declare -i i=0
+declare status=
+declare -a outlines=()
+declare -a lines=()
+declare -r scpc="python scpc.py"
+
+jupyter nbconvert --to python scpc.ipynb 2>&1
+chmod +x scpc.py
+
+#######################################
+i+=1
+start "help"
+  debug "$scpc --help"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[0]}" "Usage: scpc.py [options]"
+end
+#######################################
