@@ -3,10 +3,10 @@
 declare -i i=0
 declare status=
 declare -a outlines=()
-declare -a lines=()
+declare -a errlines=()
 declare -r scpc="python scpc.py"
 
-jupyter nbconvert --to python scpc.ipynb 2>&1
+jupyter nbconvert --to python scpc.ipynb >/dev/null 2>&1
 chmod +x scpc.py
 
 #######################################
