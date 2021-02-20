@@ -17,3 +17,83 @@ start "help"
   assert_startwith "${outlines[0]}" "Usage: scpc.py [options]"
 end
 #######################################
+i+=1
+start "test --property invalid value"
+  debug "$scpc --property invalid"
+  assert_equal "$status" 2
+  assert_startwith "${errlines[0]}" "Usage: scpc.py [options]"
+end
+#######################################
+i+=1
+start "test --property invidual values"
+  debug "$scpc --property under-closed"
+  assert_equal "$status" 0
+  assert_equal "${#outlines[@]}" 3
+  debug "$scpc --property semi-closed"
+  assert_equal "$status" 0
+  assert_equal "${#outlines[@]}" 4
+  debug "$scpc --property weakly-closed"
+  assert_equal "$status" 0
+  assert_equal "${#outlines[@]}" 4
+  debug "$scpc --property chordal"
+  assert_equal "$status" 0
+  assert_equal "${#outlines[@]}" 3
+  debug "$scpc --property closed"
+  assert_equal "$status" 0
+  assert_equal "${#outlines[@]}" 3
+  debug "$scpc --property almost-closed"
+  assert_equal "$status" 0
+  assert_equal "${#outlines[@]}" 3
+  debug "$scpc --property all"
+  assert_equal "$status" 0
+  assert_equal "${#outlines[@]}" 10
+end
+#######################################
+i+=1
+start "test default values"
+  debug "$scpc"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is NOT under-closed"
+  assert_startwith "${outlines[3]}" "is semi-closed with the labeling"
+  assert_startwith "${outlines[4]}" "[[1, 2], [1, 3], [2, 3], [2, 6], [3, 6], [3, 5], [5, 6], [4, 6], [4, 5], [1, 5], [1, 4], [2, 4]]"
+  assert_startwith "${outlines[5]}" "is weakly-closed with the labeling"
+  assert_startwith "${outlines[6]}" "[[1, 2], [1, 3], [2, 3], [2, 4], [3, 4], [3, 5], [4, 5], [4, 6], [5, 6], [1, 5], [1, 6], [2, 6]]"
+  assert_startwith "${outlines[7]}" "is NOT chordal"
+  assert_startwith "${outlines[8]}" "is NOT closed"
+  assert_startwith "${outlines[9]}" "is NOT almost-closed"
+end
+#######################################
+i+=1
+start "test non-consecutive input matrix"
+  debug "echo '0 1 2
+  3 4 5
+  6 7 8' | $scpc"
+  assert_equal "$status" 1
+  assert_startwith "${errlines[0]}" "Input matrix does not contain a consecutive set from 1 to n."
+  debug "echo '1 2 3
+  3 4 5
+  3 4 8' | $scpc"
+  assert_equal "$status" 1
+  assert_startwith "${errlines[0]}" "Input matrix does not contain a consecutive set from 1 to n."
+end
+#######################################
+i+=1
+start "test universal input -- all properities passing"
+  debug "echo '1 2 3
+  4 5 6
+  7 8 9' |$scpc"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is under-closed with the labeling"
+  assert_startwith "${outlines[3]}" "[[1, 2, 3], [4, 5, 6], [7, 8, 9]]"
+  assert_startwith "${outlines[4]}" "is semi-closed with the labeling"
+  assert_startwith "${outlines[5]}" "[[1, 2, 3], [4, 5, 6], [7, 8, 9]]"
+  assert_startwith "${outlines[6]}" "is weakly-closed with the labeling"
+  assert_startwith "${outlines[7]}" "[[1, 2, 3], [4, 5, 6], [7, 8, 9]]"
+  assert_startwith "${outlines[8]}" "is chordal with the labeling"
+  assert_startwith "${outlines[9]}" "[[1, 2, 3], [4, 5, 6], [7, 8, 9]]"
+  assert_startwith "${outlines[10]}" "is closed with the labeling"
+  assert_startwith "${outlines[11]}" "[[1, 2, 3], [4, 5, 6], [7, 8, 9]]"
+  assert_startwith "${outlines[12]}" "is almost-closed with the labeling"
+  assert_startwith "${outlines[13]}" "[[1, 2, 3], [4, 5, 6], [7, 8, 9]]"
+end
+#######################################
