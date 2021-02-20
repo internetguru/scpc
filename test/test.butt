@@ -25,7 +25,7 @@ start "test --property invalid value"
 end
 #######################################
 i+=1
-start "test --property invidual values"
+start "test --property individual values"
   debug "$scpc --property under-closed"
   assert_equal "$status" 0
   assert_equal "${#outlines[@]}" 3
@@ -81,7 +81,7 @@ i+=1
 start "test universal input -- all properities passing"
   debug "echo '1 2 3
   4 5 6
-  7 8 9' |$scpc"
+  7 8 9' | $scpc"
   assert_equal "$status" 0
   assert_startwith "${outlines[2]}" "is under-closed with the labeling"
   assert_startwith "${outlines[3]}" "[[1, 2, 3], [4, 5, 6], [7, 8, 9]]"
