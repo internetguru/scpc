@@ -28,7 +28,7 @@ i+=1
 start "test invalid input"
   debug "echo 'a b c' | $scpc"
   assert_equal "$status" 2
-  assert_startwith "${errlines[0]}" "Usage: scpc.py [options]"
+  assert_startwith "${errlines[0]}" "Invalid input, <class 'ValueError'> occurred."
 end
 #######################################
 i+=1
