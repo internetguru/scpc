@@ -88,6 +88,7 @@ try {
 } catch (Exception $ex) {
   $output = "Exception: ".$ex->getMessage();
 }
+$output = htmlentities($output);
 
 $radios = "";
 foreach($properties as $property) {
