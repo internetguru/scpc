@@ -1,7 +1,8 @@
 # Simplicial Complex Property Check (SCPC)
 
 
-| main branch  | dev branch |
+| branch  | status |
 | ------------- | ------------- |
-| [![tests](https://github.com/martapavelka/scpc/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/martapavelka/scpc/actions/workflows/test.yml)  | [![tests](https://github.com/martapavelka/scpc/actions/workflows/test.yml/badge.svg?branch=dev)](https://github.com/martapavelka/scpc/actions/workflows/test.yml)  |
+| main | [![tests](https://github.com/martapavelka/scpc/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/martapavelka/scpc/actions/workflows/test.yml) |
+| dev | [![tests](https://github.com/martapavelka/scpc/actions/workflows/test.yml/badge.svg?branch=dev)](https://github.com/martapavelka/scpc/actions/workflows/test.yml) |
 
