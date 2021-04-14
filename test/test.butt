@@ -161,7 +161,7 @@ start "test default php matrix"
 end
 #######################################
 i+=1
-start "test traceable and hamiltonian"
+start "test traceable and Hamiltonian"
   declare matrix="1 2 3
   2 3 4
   3 4 5
