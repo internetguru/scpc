@@ -1,7 +1,7 @@
 <?php
 
 $input = $_POST['input'] ?? "1 2 3 4&#10;1 3 4 5&#10;1 2 4 5&#10;2 4 5 6";
-$properties = ["all", "under-closed", "semi-closed", "weakly-closed", "chordal", "closed", "unit-interval"];
+$properties = ["under-closed", "semi-closed", "weakly-closed", "chordal", "closed", "unit-interval", "traceable", "hamiltonian", "weakly-traceable", "weakly-hamiltonian"];
 $log = "log.txt";
 $status_ok = "done";
 $status_size = "max_size_exceeded";
@@ -93,7 +93,7 @@ $output = htmlentities($output);
 $radios = "";
 foreach($properties as $property) {
   $radios .= "<dd><label><input type='radio' name='property' value='$property'"
-    . ((isset($_POST['property']) && $_POST['property'] == $property) || $property == "all" ? " checked" : "")
+    . ((isset($_POST['property']) && $_POST['property'] == $property) || $property == $properties[0] ? " checked" : "")
     . "/> $property</label></dd>";
 }
 
