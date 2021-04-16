@@ -1,7 +1,7 @@
 <?php
 
 $input = $_POST['input'] ?? "1 2 3 4&#10;1 3 4 5&#10;1 2 4 5&#10;2 4 5 6";
-$properties = ["under-closed", "semi-closed", "weakly-closed", "chordal", "closed", "unit-interval", "traceable", "Hamiltonian", "weakly-traceable", "weakly-Hamiltonian"];
+$properties = ["under-closed", "semi-closed", "weakly-closed", "chordal", "closed", "unit-interval", "traceable", "hamiltonian", "weakly-traceable", "weakly-hamiltonian"];
 $log = "log.txt";
 $status_ok = "done";
 $status_size = "max_size_exceeded";
