@@ -113,7 +113,7 @@ try {
       throw new Exception("Input matrix is to big.");
     }
     $code = execute(
-      "echo \"{$_POST['input']}\" | /usr/local/bin/python3.7 scpc.py --property
+      "echo \"{$_POST['input']}\" | /usr/local/bin/python3.7 scpc.py --property \
       {$_POST['property']} 2>&1",
       null, $output, $output, $timeout
     );
