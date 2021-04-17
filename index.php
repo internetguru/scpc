@@ -1,7 +1,14 @@
 <?php
 
 $input = $_POST['input'] ?? "1 2 3 4&#10;1 3 4 5&#10;1 2 4 5&#10;2 4 5 6";
-$properties = ["under-closed", "semi-closed", "weakly-closed", "chordal", "closed", "unit-interval", "traceable", "hamiltonian", "weakly-traceable", "weakly-hamiltonian"];
+$properties = [
+  "under-closed", "semi-closed", "weakly-closed", "chordal", "closed",
+  "unit-interval", "traceable", "hamiltonian", "weakly-traceable", "weakly-hamiltonian"
+];
+$properties_translation = [
+  "hamiltonian" => "Hamiltonian",
+  "weakly-hamiltonian" => "weakly-Hamiltonian"
+];
 $log = "log.txt";
 $status_ok = "done";
 $status_size = "max_size_exceeded";
@@ -9,7 +16,7 @@ $status_timeout = "timeout_exceeded";
 $max_input_size = 1000;
 $timeout = 120;
 
-function getClientIP () {
+function getClientIp () {
   $keys = array('HTTP_CLIENT_IP','HTTP_X_FORWARDED_FOR','HTTP_X_FORWARDED',
     'HTTP_FORWARDED_FOR','HTTP_FORWARDED','REMOTE_ADDR');
   foreach($keys as $key) {
@@ -20,11 +27,41 @@ function getClientIP () {
   return "UNKNOWN";
 }
 
-function log_status ($status) {
+function logStatus ($status) {
   global $log, $input;
   $date = new DateTime();
   file_put_contents($log, sprintf("%s (%s): %s [ %s ]\n",
-    $date->getTimestamp(), getClientIP(), $input, $status), FILE_APPEND | LOCK_EX);
+    $date->getTimestamp(), getClientIp(), $input, $status), FILE_APPEND | LOCK_EX);
+}
+
+function getOutput ($output, $code) {
+  // 0 == ok, 1 == unexpected, 2 == invalid input,
+  // 3 == no match, 100 == timeout
+  switch ($code) {
+    case 0:
+      $output_template = 'Matrix is %2$s with the labeling %1$s.';
+    break;
+    case 1:
+      $output_template = 'Unexpected Exception: %s';
+    break;
+    case 2:
+      $output_template = 'Invalid input Exception: %s';
+    break;
+    case 3:
+      $output_template = 'Matrix is NOT %s.';
+    break;
+    case 100:
+      logStatus($status_timeout);
+      throw new Exception("Script timeout exceeded.");
+    default:
+      throw new Exception("Unexpected return code.");
+    break;
+  }
+  return sprintf(
+    $output_template,
+    $output,
+    $properties_translation[$_POST['property']] ?? $_POST['property']
+  );
 }
 
 function execute ($cmd, $stdin = null, &$stdout, &$stderr, $timeout = false) {
@@ -72,28 +109,27 @@ $output = "---";
 try {
   if (isset($_POST['input']) && isset($_POST['property'])) {
     if (strlen($_POST['input']) > $max_input_size) {
-      log_status($status_size);
-      throw new Exception("Input matrix is to big");
+      logStatus($status_size);
+      throw new Exception("Input matrix is to big.");
     }
     $code = execute(
-      "echo \"{$_POST['input']}\" | /usr/local/bin/python3.7 scpc.py --property {$_POST['property']} 2>&1",
+      "echo \"{$_POST['input']}\" | /usr/local/bin/python3.7 scpc.py --property
+      {$_POST['property']} 2>&1",
       null, $output, $output, $timeout
     );
-    if ($code == 100) {
-      log_status($status_timeout);
-      throw new Exception("Script timeout exceeded");
-    }
-    log_status($status_ok);
+    $output = getOutput($output, $code);
+    logStatus($status_ok."(".$code.")");
   }
 } catch (Exception $ex) {
-  $output = "Exception: ".$ex->getMessage();
+  $output = printf("Runtime Exception: %s", $ex->getMessage());
 }
 $output = htmlentities($output);
 
 $radios = "";
 foreach($properties as $property) {
   $radios .= "<dd><label><input type='radio' name='property' value='$property'"
-    . ((isset($_POST['property']) && $_POST['property'] == $property) || $property == $properties[0] ? " checked" : "")
+    . ((isset($_POST['property']) && $_POST['property'] == $property)
+      || $property == $properties[0] ? " checked" : "")
     . "/> $property</label></dd>";
 }
 
