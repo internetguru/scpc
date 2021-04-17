@@ -54,7 +54,7 @@ function getOutput ($output, $code) {
       logStatus($status_timeout);
       throw new Exception("Script timeout exceeded.");
     default:
-      throw new Exception("Unexpected return code.");
+      throw new Exception(sprintf("Unexpected return code %s.", $code));
     break;
   }
   return sprintf(
@@ -121,7 +121,7 @@ try {
     logStatus($status_ok."(".$code.")");
   }
 } catch (Exception $ex) {
-  $output = printf("Runtime Exception: %s", $ex->getMessage());
+  $output = sprintf("Runtime Exception: %s", $ex->getMessage());
 }
 $output = htmlentities($output);
 
