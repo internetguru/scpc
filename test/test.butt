@@ -59,16 +59,52 @@ start "test default python matrix"
 1 5
 1 6
 2 6"
-  debug "echo '$default' | $scpc"
+
+  debug "echo '$default' | $scpc -p under-closed"
   assert_equal "$status" 0
   assert_startwith "${outlines[2]}" "is NOT under-closed"
-  assert_startwith "${outlines[3]}" "is semi-closed with the labeling"
-  assert_startwith "${outlines[4]}" "[[1, 2], [1, 3], [2, 3], [2, 6], [3, 6], [3, 5], [5, 6], [4, 6], [4, 5], [1, 5], [1, 4], [2, 4]]"
-  assert_startwith "${outlines[5]}" "is weakly-closed with the labeling"
-  assert_startwith "${outlines[6]}" "[[1, 2], [1, 3], [2, 3], [2, 4], [3, 4], [3, 5], [4, 5], [4, 6], [5, 6], [1, 5], [1, 6], [2, 6]]"
-  assert_startwith "${outlines[7]}" "is NOT chordal"
-  assert_startwith "${outlines[8]}" "is NOT closed"
-  assert_startwith "${outlines[9]}" "is NOT unit-interval"
+
+  debug "echo '$default' | $scpc -p semi-closed"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is semi-closed with the labeling"
+  assert_startwith "${outlines[3]}" "[[1, 2], [1, 3], [2, 3], [2, 6], [3, 6], [3, 5], [5, 6], [4, 6], [4, 5], [1, 5], [1, 4], [2, 4]]"
+
+  debug "echo '$default' | $scpc -p weakly-closed"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is weakly-closed with the labeling"
+  assert_startwith "${outlines[3]}" "[[1, 2], [1, 3], [2, 3], [2, 4], [3, 4], [3, 5], [4, 5], [4, 6], [5, 6], [1, 5], [1, 6], [2, 6]]"
+
+  debug "echo '$default' | $scpc -p chordal"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is NOT chordal"
+
+  debug "echo '$default' | $scpc -p closed"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is NOT closed"
+
+  debug "echo '$default' | $scpc -p unit-interval"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is NOT unit-interval"
+
+  debug "echo '$default' | $scpc -p traceable"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is traceable with the labeling"
+  assert_startwith "${outlines[3]}" "[[1, 2], [1, 3], [2, 3], [2, 4], [3, 4], [3, 5], [4, 5], [4, 6], [5, 6], [1, 5], [1, 6], [2, 6]]"
+
+  debug "echo '$default' | $scpc -p hamiltonian"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is hamiltonian with the labeling"
+  assert_startwith "${outlines[3]}" "[[1, 2], [1, 3], [2, 3], [2, 4], [3, 4], [3, 5], [4, 5], [4, 6], [5, 6], [1, 5], [1, 6], [2, 6]]"
+
+  debug "echo '$default' | $scpc -p weakly-traceable"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is weakly-traceable with the labeling"
+  assert_startwith "${outlines[3]}" "[[1, 2], [1, 3], [2, 3], [2, 4], [3, 4], [3, 5], [4, 5], [4, 6], [5, 6], [1, 5], [1, 6], [2, 6]]"
+
+  debug "echo '$default' | $scpc -p weakly-hamiltonian"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is weakly-hamiltonian with the labeling"
+  assert_startwith "${outlines[3]}" "[[1, 2], [1, 3], [2, 3], [2, 4], [3, 4], [3, 5], [4, 5], [4, 6], [5, 6], [1, 5], [1, 6], [2, 6]]"
 end
 #######################################
 i+=1
@@ -77,36 +113,244 @@ start "test default php matrix"
 1 3 4 5
 1 2 4 5
 2 4 5 6"
-  debug "echo '$default' | $scpc"
+  debug "echo '$default' | $scpc -p under-closed"
   assert_equal "$status" 0
   assert_startwith "${outlines[2]}" "is under-closed with the labeling"
   assert_startwith "${outlines[3]}" "[[1, 2, 3, 4], [1, 2, 3, 5], [2, 3, 4, 5], [3, 4, 5, 6]]"
-  assert_startwith "${outlines[4]}" "is semi-closed with the labeling"
-  assert_startwith "${outlines[5]}" "[[1, 2, 3, 4], [1, 2, 3, 5], [2, 3, 4, 5], [3, 4, 5, 6]]"
-  assert_startwith "${outlines[6]}" "is weakly-closed with the labeling"
-  assert_startwith "${outlines[7]}" "[[1, 2, 3, 4], [1, 2, 4, 5], [1, 3, 4, 5], [3, 4, 5, 6]]"
-  assert_startwith "${outlines[8]}" "is NOT chordal"
-  assert_startwith "${outlines[9]}" "is NOT closed"
-  assert_startwith "${outlines[10]}" "is NOT unit-interval"
+
+  debug "echo '$default' | $scpc -p semi-closed"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is semi-closed with the labeling"
+  assert_startwith "${outlines[3]}" "[[1, 2, 3, 4], [1, 2, 3, 5], [2, 3, 4, 5], [3, 4, 5, 6]]"
+
+  debug "echo '$default' | $scpc -p weakly-closed"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is weakly-closed with the labeling"
+  assert_startwith "${outlines[3]}" "[[1, 2, 3, 4], [1, 2, 4, 5], [1, 3, 4, 5], [3, 4, 5, 6]]"
+
+  debug "echo '$default' | $scpc -p chordal"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is NOT chordal"
+
+  debug "echo '$default' | $scpc -p closed"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is NOT closed"
+
+  debug "echo '$default' | $scpc -p unit-interval"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is NOT unit-interval"
+
+  debug "echo '$default' | $scpc -p traceable"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is traceable with the labeling"
+  assert_startwith "${outlines[3]}" "[[1, 2, 3, 4], [1, 2, 4, 5], [2, 3, 4, 5], [3, 4, 5, 6]]"
+
+  debug "echo '$default' | $scpc -p hamiltonian"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is NOT hamiltonian"
+
+  debug "echo '$default' | $scpc -p weakly-traceable"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is weakly-traceable with the labeling"
+  assert_startwith "${outlines[3]}" "[[1, 2, 3, 4], [1, 2, 4, 5], [1, 3, 4, 5], [3, 4, 5, 6]]"
+
+  debug "echo '$default' | $scpc -p weakly-hamiltonian"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is weakly-hamiltonian with the labeling"
+  assert_startwith "${outlines[3]}" "[[1, 2, 3, 6], [1, 3, 4, 6], [1, 2, 3, 4], [2, 3, 4, 5]]"
 end
 #######################################
 i+=1
-start "test universal input -- all properities passing"
-  debug "echo '1 2 3
+start "test traceable and hamiltonian"
+  declare matrix="1 2 3
+  2 3 4
+  3 4 5
   4 5 6
-  7 8 9' | $scpc"
+  5 6 7
+  6 7 8
+  7 8 9
+  1 8 9
+  1 3 9
+  1 4 7"
+  debug "echo '$matrix' | $scpc -p traceable"
   assert_equal "$status" 0
-  assert_startwith "${outlines[2]}" "is under-closed with the labeling"
-  assert_startwith "${outlines[3]}" "[[1, 2, 3], [4, 5, 6], [7, 8, 9]]"
-  assert_startwith "${outlines[4]}" "is semi-closed with the labeling"
-  assert_startwith "${outlines[5]}" "[[1, 2, 3], [4, 5, 6], [7, 8, 9]]"
-  assert_startwith "${outlines[6]}" "is weakly-closed with the labeling"
-  assert_startwith "${outlines[7]}" "[[1, 2, 3], [4, 5, 6], [7, 8, 9]]"
-  assert_startwith "${outlines[8]}" "is chordal with the labeling"
-  assert_startwith "${outlines[9]}" "[[1, 2, 3], [4, 5, 6], [7, 8, 9]]"
-  assert_startwith "${outlines[10]}" "is closed with the labeling"
-  assert_startwith "${outlines[11]}" "[[1, 2, 3], [4, 5, 6], [7, 8, 9]]"
-  assert_startwith "${outlines[12]}" "is unit-interval with the labeling"
-  assert_startwith "${outlines[13]}" "[[1, 2, 3], [4, 5, 6], [7, 8, 9]]"
+  assert_startwith "${outlines[2]}" "is traceable with the labeling"
+  assert_startwith "${outlines[3]}" "[[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 6], [5, 6, 7], [6, 7, 8], [7, 8, 9], [1, 8, 9], [1, 3, 9], [1, 4, 7]]"
+
+  debug "echo '$matrix' | $scpc -p hamiltonian"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is NOT hamiltonian"
+
+  matrix="1 2 3
+  2 3 4
+  3 4 5
+  4 5 6
+  5 6 7
+  6 7 8
+  3 8 9
+  1 8 9
+  1 2 9
+  1 4 7"
+  debug "echo '$matrix' | $scpc -p traceable"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is traceable with the labeling"
+  assert_startwith "${outlines[3]}" "[[2, 3, 4], [3, 4, 5], [4, 5, 6], [5, 6, 7], [6, 7, 8], [7, 8, 9], [1, 4, 9], [1, 2, 9], [1, 2, 3], [2, 5, 8]]"
+
+  matrix="1 2 3
+  2 3 4
+  3 4 5
+  4 5 6
+  5 6 7
+  6 7 8
+  7 8 9
+  1 8 9
+  1 2 9
+  1 4 7"
+  debug "echo '$matrix' | $scpc -p traceable"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is traceable with the labeling"
+  assert_startwith "${outlines[3]}" "[[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 6], [5, 6, 7], [6, 7, 8], [7, 8, 9], [1, 8, 9], [1, 2, 9], [1, 4, 7]]"
+
+  debug "echo '$matrix' | $scpc -p hamiltonian"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is hamiltonian with the labeling"
+  assert_startwith "${outlines[3]}" "[[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 6], [5, 6, 7], [6, 7, 8], [7, 8, 9], [1, 8, 9], [1, 2, 9], [1, 4, 7]]"
+
+  matrix="1 2
+  1 3
+  2 3
+  2 4
+  3 4
+  3 5
+  4 5
+  4 6
+  5 6
+  1 5
+  1 6
+  2 6"
+  debug "echo '$matrix' | $scpc -p traceable"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is traceable with the labeling"
+  assert_startwith "${outlines[3]}" "[[1, 2], [1, 3], [2, 3], [2, 4], [3, 4], [3, 5], [4, 5], [4, 6], [5, 6], [1, 5], [1, 6], [2, 6]]"
+
+  debug "echo '$matrix' | $scpc -p hamiltonian"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is hamiltonian with the labeling"
+  assert_startwith "${outlines[3]}" "[[1, 2], [1, 3], [2, 3], [2, 4], [3, 4], [3, 5], [4, 5], [4, 6], [5, 6], [1, 5], [1, 6], [2, 6]]"
+end
+#######################################
+i+=1
+start "test weakly-traceable and weakly-hamiltonian"
+  declare matrix="1 2 3 4
+  2 3 4 5
+  5 6 7 8
+  1 6 7 10
+  1 8 9 10"
+  debug "echo '$matrix' | $scpc -p weakly-traceable"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is weakly-traceable with the labeling"
+  assert_startwith "${outlines[3]}" "[[1, 8, 9, 10], [7, 8, 9, 10], [4, 5, 6, 7], [1, 3, 5, 6], [1, 2, 3, 4]]"
+
+  debug "echo '$matrix' | $scpc -p weakly-hamiltonian"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is weakly-hamiltonian with the labeling"
+  assert_startwith "${outlines[3]}" "[[1, 2, 3, 4], [2, 3, 4, 5], [5, 6, 7, 8], [1, 6, 7, 10], [1, 8, 9, 10]]"
+
+  matrix="1 2 3
+  1 5 6
+  3 4 5"
+  debug "echo '$matrix' | $scpc -p weakly-traceable"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is NOT weakly-traceable"
+
+  debug "echo '$matrix' | $scpc -p weakly-hamiltonian"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is weakly-hamiltonian with the labeling"
+  assert_startwith "${outlines[3]}" "[[1, 2, 3], [1, 5, 6], [3, 4, 5]]"
+
+  matrix="1 2
+  2 3
+  3 4
+  3 5"
+  debug "echo '$matrix' | $scpc -p weakly-traceable"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is NOT weakly-traceable"
+
+  matrix="1 2 3
+  2 3 4
+  3 4 5
+  4 5 6
+  5 6 7
+  6 7 8
+  7 8 9
+  1 8 9
+  1 3 9
+  1 4 7"
+  debug "echo '$matrix' | $scpc -p weakly-traceable"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is weakly-traceable with the labeling"
+  assert_startwith "${outlines[3]}" "[[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 6], [5, 6, 7], [6, 7, 8], [7, 8, 9], [1, 8, 9], [1, 3, 9], [1, 4, 7]]"
+
+  debug "echo '$matrix' | $scpc -p weakly-hamiltonian"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is weakly-hamiltonian with the labeling"
+  assert_startwith "${outlines[3]}" "[[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 6], [5, 6, 7], [6, 7, 8], [7, 8, 9], [1, 8, 9], [1, 3, 9], [1, 4, 7]]"
+
+  matrix="1 2 3
+  2 3 4
+  3 4 5
+  4 5 6
+  5 6 7
+  6 7 8
+  3 8 9
+  1 8 9
+  1 2 9
+  1 4 7"
+  debug "echo '$matrix' | $scpc -p weakly-traceable"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is weakly-traceable with the labeling"
+  assert_startwith "${outlines[3]}" "[[1, 2, 3], [2, 3, 8], [3, 8, 9], [7, 8, 9], [6, 7, 9], [5, 6, 7], [3, 4, 5], [1, 4, 5], [1, 2, 4], [1, 6, 8]]"
+
+  matrix="1 2 3
+  2 3 4
+  3 4 5
+  4 5 6
+  5 6 7
+  6 7 8
+  7 8 9
+  1 8 9
+  1 2 9
+  1 4 7"
+  debug "echo '$matrix' | $scpc -p weakly-traceable"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is weakly-traceable with the labeling"
+  assert_startwith "${outlines[3]}" "[[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 6], [5, 6, 7], [6, 7, 8], [7, 8, 9], [1, 8, 9], [1, 2, 9], [1, 4, 7]]"
+
+  debug "echo '$matrix' | $scpc -p weakly-hamiltonian"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is weakly-hamiltonian with the labeling"
+  assert_startwith "${outlines[3]}" "[[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 6], [5, 6, 7], [6, 7, 8], [7, 8, 9], [1, 8, 9], [1, 2, 9], [1, 4, 7]]"
+
+  matrix="1 2
+  1 3
+  2 3
+  2 4
+  3 4
+  3 5
+  4 5
+  4 6
+  5 6
+  1 5
+  1 6
+  2 6"
+  debug "echo '$matrix' | $scpc -p weakly-traceable"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is weakly-traceable with the labeling"
+  assert_startwith "${outlines[3]}" "[[1, 2], [1, 3], [2, 3], [2, 4], [3, 4], [3, 5], [4, 5], [4, 6], [5, 6], [1, 5], [1, 6], [2, 6]]"
+
+  debug "echo '$matrix' | $scpc -p weakly-hamiltonian"
+  assert_equal "$status" 0
+  assert_startwith "${outlines[2]}" "is weakly-hamiltonian with the labeling"
+  assert_startwith "${outlines[3]}" "[[1, 2], [1, 3], [2, 3], [2, 4], [3, 4], [3, 5], [4, 5], [4, 6], [5, 6], [1, 5], [1, 6], [2, 6]]"
 end
 #######################################
