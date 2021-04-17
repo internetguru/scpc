@@ -39,7 +39,7 @@ function getOutput ($output, $code) {
   // 3 == no match, 100 == timeout
   switch ($code) {
     case 0:
-      $output_template = 'Matrix is %2$s with the labeling: \n%1$s.';
+      $output_template = 'Matrix is %2$s with the labeling:'."\n".' %1$s.';
     break;
     case 1:
       $output_template = 'Unexpected Exception: %s';
