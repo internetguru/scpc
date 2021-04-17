@@ -35,11 +35,12 @@ function logStatus ($status) {
 }
 
 function getOutput ($output, $code) {
+  global $properties_translation;
   // 0 == ok, 1 == unexpected, 2 == invalid input,
   // 3 == no match, 100 == timeout
   switch ($code) {
     case 0:
-      $output_template = 'Matrix is %2$s with the labeling:'."\n".' %1$s.';
+      $output_template = 'Matrix is %2$s with the labeling:'."\n".'%1$s';
     break;
     case 1:
       $output_template = 'Unexpected Exception: %s';
