@@ -40,7 +40,7 @@ function getOutput ($output, $code) {
   // 3 == no match, 100 == timeout
   switch ($code) {
     case 0:
-      $output_template = 'Matrix is %2$s with the labeling:'."\n".'%1$s';
+      $output_template = 'Simplicial complex is %2$s with the labeling:'."\n".'%1$s';
     break;
     case 1:
       $output_template = 'Unexpected Exception: %s';
@@ -49,7 +49,7 @@ function getOutput ($output, $code) {
       $output_template = 'Invalid input Exception: %s';
     break;
     case 3:
-      $output_template = 'Matrix is NOT %2$s.';
+      $output_template = 'Simplicial complex is NOT %2$s.';
     break;
     case 100:
       logStatus($status_timeout);
@@ -128,10 +128,13 @@ $output = htmlentities($output);
 
 $radios = "";
 foreach($properties as $property) {
-  $radios .= "<dd><label><input type='radio' name='property' value='$property'"
-    . ((isset($_POST['property']) && $_POST['property'] == $property)
-      || $property == $properties[0] ? " checked" : "")
-    . "/> $property</label></dd>";
+  $radios .= sprintf(
+    '<dd><label><input type="radio" name="property" value="%s" %s/>%s</label></dd>',
+    $property,
+    ((isset($_POST['property']) && $_POST['property'] == $property)
+      || $property == $properties[0] ? " checked" : ""),
+    $properties_translation[$property] ?? $property
+  );
 }
 
 $commit_id = substr(shell_exec("/usr/local/bin/git rev-parse HEAD"), 0, 7);
