@@ -129,7 +129,8 @@ $output = htmlentities($output);
 $radios = "";
 foreach($properties as $property) {
   $radios .= sprintf(
-    '<dd><label><input type="radio" name="property" value="%1$s" %2$s/>%1$s</label></dd>',
+    '<dd><label><input type="radio" name="property" value="%s" %s/>%s</label></dd>',
+    $property,
     $properties_translation[$property] ?? $property,
     ((isset($_POST['property']) && $_POST['property'] == $property)
       || $property == $properties[0] ? " checked" : "")
