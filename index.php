@@ -40,7 +40,7 @@ function getOutput ($output, $code) {
   // 3 == no match, 100 == timeout
   switch ($code) {
     case 0:
-      $output_template = 'Matrix is %2$s with the labeling:'."\n".'%1$s';
+      $output_template = 'Simplicial complex is %2$s with the labeling:'."\n".'%1$s';
     break;
     case 1:
       $output_template = 'Unexpected Exception: %s';
@@ -49,7 +49,7 @@ function getOutput ($output, $code) {
       $output_template = 'Invalid input Exception: %s';
     break;
     case 3:
-      $output_template = 'Matrix is NOT %2$s.';
+      $output_template = 'Simplicial complex is NOT %2$s.';
     break;
     case 100:
       logStatus($status_timeout);
