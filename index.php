@@ -128,10 +128,12 @@ $output = htmlentities($output);
 
 $radios = "";
 foreach($properties as $property) {
-  $radios .= "<dd><label><input type='radio' name='property' value='$property'"
-    . ((isset($_POST['property']) && $_POST['property'] == $property)
+  $radios .= sprintf(
+    '<dd><label><input type="radio" name="property" value="%1$s" %s/>%1$s</label></dd>',
+    $properties_translation[$property] ?? $property,
+    ((isset($_POST['property']) && $_POST['property'] == $property)
       || $property == $properties[0] ? " checked" : "")
-    . "/> $property</label></dd>";
+  );
 }
 
 $commit_id = substr(shell_exec("/usr/local/bin/git rev-parse HEAD"), 0, 7);
