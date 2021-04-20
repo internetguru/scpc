@@ -34,7 +34,7 @@
 
 # Exit Codes
 
-- `0`: Match
-- `1`: Unexpected exception
-- `2`: Invalid usage
-- `3`: No match
+- `0` Match
+- `1` Unexpected exception
+- `2` Invalid usage
+- `3` No match
