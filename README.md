@@ -17,14 +17,14 @@
     - [main](https://www.math.miami.edu/~pavelka/scpc/)
 
 3. Locally
-    1. Compile and set permissions
+    - Compile and set permissions
     
     ```sh
     jupyter nbconvert --to python scpc.ipynb
     chmod +x scpc.py
     ```
     
-    2. Run
+    - Run, e.g.
     
     ```sh
     echo "1 2 3
