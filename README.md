@@ -1,30 +1,32 @@
-# Simplicial Complex Property Check (SCPC)
-
-
 | branch  | status |
 | :------------- | :------------- |
 | main | [![tests](https://github.com/martapavelka/scpc/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/martapavelka/scpc/actions/workflows/test.yml) |
 | dev | [![tests](https://github.com/martapavelka/scpc/actions/workflows/test.yml/badge.svg?branch=dev)](https://github.com/martapavelka/scpc/actions/workflows/test.yml) |
 
-# Running
+# Simplicial Complex Property Check (SCPC)
 
-1. Online in Google Collab 
-    - [dev](https://colab.research.google.com/github/martapavelka/scpc/blob/dev/scpc.ipynb)
-    - [main](https://colab.research.google.com/github/martapavelka/scpc/blob/main/scpc.ipynb)
+The script detects the simplicial complex closure properties from STDIN. Outputs labeling if property is detected. See exit codes below.
 
-1. Online with user interface
-    - [dev](https://www.math.miami.edu/~pavelka/scpc-dev/)
-    - [main](https://www.math.miami.edu/~pavelka/scpc/)
+## Usage: Google Collab 
 
-3. Locally
-    - Compile and set permissions
+- [colab.research.google.com/.../dev](https://colab.research.google.com/github/martapavelka/scpc/blob/dev/scpc.ipynb)
+- [colab.research.google.com/.../main](https://colab.research.google.com/github/martapavelka/scpc/blob/main/scpc.ipynb)
+
+## Usage: Web UI
+
+- [www.math.miami.edu/~pavelka/scpc-dev](https://www.math.miami.edu/~pavelka/scpc-dev/)
+- [www.math.miami.edu/~pavelka/scpc](https://www.math.miami.edu/~pavelka/scpc/)
+
+## Local usage
+
+- Compile and set permissions
     
     ```sh
+    wget https://raw.githubusercontent.com/martapavelka/scpc/dev/scpc.ipynb
     jupyter nbconvert --to python scpc.ipynb
     chmod +x scpc.py
     ```
-    
-    - Run, e.g.
+- Run the script, e.g.
     
     ```sh
     echo "1 2 3
@@ -32,9 +34,9 @@
     7 8 9" | ./scpc.py --property under-closed
     ```
 
-# Exit Codes
+## Exit Codes
 
-- `0` Match
+- `0` Property detected
 - `1` Unexpected exception
 - `2` Invalid usage
-- `3` No match
+- `3` Does not have property
