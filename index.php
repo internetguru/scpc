@@ -153,6 +153,7 @@ echo <<<EOT
   <head>
     <title>$heading</title>
     <meta charset='UTF-8'/>
+    <meta content="initial-scale=1" name="viewport"/>
   </head>
   <body>
     <h1>$heading</h1>
