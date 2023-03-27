@@ -10,12 +10,10 @@ The script detects the simplicial complex closure properties from STDIN. Outputs
 ## Usage: Google Collab 
 
 - [colab.research.google.com/.../dev](https://colab.research.google.com/github/martapavelka/scpc/blob/dev/scpc.ipynb)
-- [colab.research.google.com/.../main](https://colab.research.google.com/github/martapavelka/scpc/blob/main/scpc.ipynb)
 
 ## Usage: Web UI
 
-- [www.math.miami.edu/~pavelka/scpc-dev](https://www.math.miami.edu/~pavelka/scpc-dev/)
-- [www.math.miami.edu/~pavelka/scpc](https://www.math.miami.edu/~pavelka/scpc/)
+- [https://detector.martapavelka.com/](https://detector.martapavelka.com/)
 
 ## Local usage
 
