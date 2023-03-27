@@ -9,7 +9,7 @@ $properties_translation = [
   "hamiltonian" => "Hamiltonian",
   "weakly-hamiltonian" => "weakly-Hamiltonian"
 ];
-$log = "log.txt";
+$log = "logs/scpc.txt";
 $status_ok = "done";
 $status_size = "max_size_exceeded";
 $status_timeout = "timeout_exceeded";
@@ -114,7 +114,7 @@ try {
       throw new Exception("Input matrix is to big.");
     }
     $code = execute(
-      "echo \"{$_POST['input']}\" | /usr/local/bin/python3 scpc.py --property \
+      "echo \"{$_POST['input']}\" | /usr/bin/python3 build/scpc.py --property \
       {$_POST['property']} 2>&1",
       null, $output, $output, $timeout
     );
@@ -137,9 +137,8 @@ foreach($properties as $property) {
   );
 }
 
-$commit_id = substr(shell_exec("/usr/local/bin/git rev-parse HEAD"), 0, 7);
-
-$python_file = file("scpc.py");
+$commit_id = substr(shell_exec("/usr/bin/git rev-parse HEAD"), 0, 7);
+$python_file = file("build/scpc.py");
 $heading = substr($python_file[5], 4);
 $line_num = 6;
 $desc = "";
