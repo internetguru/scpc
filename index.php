@@ -114,7 +114,7 @@ try {
       throw new Exception("Input matrix is to big.");
     }
     $code = execute(
-      "echo \"{$_POST['input']}\" | /usr/bin/python3 build/scpc.py --property \
+      "echo \"{$_POST['input']}\" | python3 build/scpc.py --property \
       {$_POST['property']} 2>&1",
       null, $output, $output, $timeout
     );
@@ -137,7 +137,22 @@ foreach($properties as $property) {
   );
 }
 
-$commit_id = substr(shell_exec("/usr/bin/git rev-parse HEAD"), 0, 7);
+$info = [
+    'version' => trim(file_get_contents('VERSION')),
+];
+$branch = '[detached]';
+$commit = trim(file_get_contents('.git/HEAD'));
+if (substr($commit, 0, 10) == 'ref: refs/') {
+    $branch = $commit;
+    $commit = trim(file_get_contents('.git/' . substr($branch, 5)));
+}
+$info += [
+    'branch' => basename($branch),
+    'commit' => substr($commit, 0, 7),
+];
+$system_info = implode(' ', $info);
+
+$commit_id = substr(shell_exec("git rev-parse HEAD"), 0, 7);
 $python_file = file("build/scpc.py");
 $heading = substr($python_file[11], 4);
 $line_num = 11;
@@ -174,7 +189,7 @@ echo <<<EOT
     <ul>
       <li><a href="https://colab.research.google.com/github/martapavelka/scpc/blob/dev/scpc.ipynb">Source code on Google Colab</a> (developer version)</li>
       <li><a href="https://github.com/martapavelka/scpc">Source code on GitHub</a> (all versions)</li>
-      <li>Current online version commit: $commit_id</li>
+      <li>Current online version: $system_info</li>
       <li>Author: Marta Pavelka, <a href="mailto:pavelka@math.miami.edu">pavelka@math.miami.edu</a></li>
     </ul>
 

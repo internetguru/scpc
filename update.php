@@ -7,4 +7,4 @@ if ($pull == "Already up to date.\n") {
   exit;
 }
 */
-echo shell_exec("/usr/local/bin/jupyter nbconvert --to python scpc.ipynb --output-dir=build 2>&1");
+echo shell_exec("jupyter nbconvert --to python scpc.ipynb --output-dir=build 2>&1");
