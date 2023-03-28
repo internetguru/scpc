@@ -1,5 +1,11 @@
 <?php
 
+$ntb_crc = hash_file('crc32b', 'scpc.ipynb');
+$python_file = "build/$ntb_crc.py";
+if (!is_file($python_file)) {
+  shell_exec("jupyter nbconvert --to python scpc.ipynb --output-dir=build --output=$ntb_crc 2>&1");
+}
+
 $input = $_POST['input'] ?? "1 2 3 4&#10;1 3 4 5&#10;1 2 4 5&#10;2 4 5 6";
 $properties = [
   "under-closed", "semi-closed", "weakly-closed", "chordal", "closed",
@@ -9,7 +15,7 @@ $properties_translation = [
   "hamiltonian" => "Hamiltonian",
   "weakly-hamiltonian" => "weakly-Hamiltonian"
 ];
-$log = "log.txt";
+$log = "logs/scpc.txt";
 $status_ok = "done";
 $status_size = "max_size_exceeded";
 $status_timeout = "timeout_exceeded";
@@ -114,7 +120,7 @@ try {
       throw new Exception("Input matrix is to big.");
     }
     $code = execute(
-      "echo \"{$_POST['input']}\" | /usr/local/bin/python3.7 scpc.py --property \
+      "echo \"{$_POST['input']}\" | python3 $python_file --property \
       {$_POST['property']} 2>&1",
       null, $output, $output, $timeout
     );
@@ -137,14 +143,28 @@ foreach($properties as $property) {
   );
 }
 
-$commit_id = substr(shell_exec("/usr/local/bin/git rev-parse HEAD"), 0, 7);
+$info = [
+    'version' => trim(file_get_contents('VERSION')),
+];
+$branch = '[detached]';
+$commit = trim(file_get_contents('.git/HEAD'));
+if (substr($commit, 0, 10) == 'ref: refs/') {
+    $branch = $commit;
+    $commit = trim(file_get_contents('.git/' . substr($branch, 5)));
+}
+$info += [
+    'branch' => basename($branch),
+    'commit' => substr($commit, 0, 7),
+];
+$system_info = implode(' ', $info);
 
-$python_file = file("scpc.py");
-$heading = substr($python_file[5], 4);
-$line_num = 6;
+$commit_id = substr(shell_exec("git rev-parse HEAD"), 0, 7);
+$python_file = file("build/scpc.py");
+$heading = substr($python_file[11], 4);
+$line_num = 11;
 $desc = "";
 while ($python_file[$line_num++] != "\n") {
-  $desc .= '<p>'.substr($python_file[$line_num++], 2).'</p>';
+  $desc .= '<p>'.substr($python_file[$line_num], 2).'</p>';
 }
 
 echo <<<EOT
@@ -175,7 +195,7 @@ echo <<<EOT
     <ul>
       <li><a href="https://colab.research.google.com/github/martapavelka/scpc/blob/dev/scpc.ipynb">Source code on Google Colab</a> (developer version)</li>
       <li><a href="https://github.com/martapavelka/scpc">Source code on GitHub</a> (all versions)</li>
-      <li>Current online version commit: $commit_id</li>
+      <li>Current online version: $system_info</li>
       <li>Author: Marta Pavelka, <a href="mailto:pavelka@math.miami.edu">pavelka@math.miami.edu</a></li>
     </ul>
 
