@@ -1,5 +1,11 @@
 <?php
 
+$ntb_crc = hash_file('crc32b', 'scpc.ipynb');
+$python_file = "build/$ntb_crc.py";
+if (!is_file($python_file)) {
+  shell_exec("jupyter nbconvert --to python scpc.ipynb --output-dir=build --output=$ntb_crc 2>&1");
+}
+
 $input = $_POST['input'] ?? "1 2 3 4&#10;1 3 4 5&#10;1 2 4 5&#10;2 4 5 6";
 $properties = [
   "under-closed", "semi-closed", "weakly-closed", "chordal", "closed",
@@ -114,7 +120,7 @@ try {
       throw new Exception("Input matrix is to big.");
     }
     $code = execute(
-      "echo \"{$_POST['input']}\" | python3 build/scpc.py --property \
+      "echo \"{$_POST['input']}\" | python3 $python_file --property \
       {$_POST['property']} 2>&1",
       null, $output, $output, $timeout
     );
