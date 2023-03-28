@@ -173,7 +173,7 @@ echo <<<EOT
   <head>
     <title>$heading</title>
     <meta charset='UTF-8'/>
-    <meta content="initial-scale=1" name="viewport"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
     <h1>$heading</h1>
