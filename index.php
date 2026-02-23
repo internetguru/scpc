@@ -9,7 +9,7 @@ if (!is_file($python_file)) {
 $input = $_POST['input'] ?? "1 2 3 4&#10;1 3 4 5&#10;1 2 4 5&#10;2 4 5 6";
 $properties = [
   "under-closed", "semi-closed", "weakly-closed", "chordal", "closed",
-  "unit-interval", "traceable", "hamiltonian", "weakly-traceable", "weakly-hamiltonian"
+  "unit-interval", "traceable", "hamiltonian", "weakly-traceable", "weakly-hamiltonian", "weakly-chordal", "skeleton-chordal"
 ];
 $properties_translation = [
   "hamiltonian" => "Hamiltonian",
