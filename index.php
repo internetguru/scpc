@@ -160,7 +160,7 @@ $info += [
 $system_info = implode(' ', $info);
 
 $commit_id = substr(shell_exec("git rev-parse HEAD"), 0, 7);
-$python_file = file("build/scpc.py");
+$python_file = file("build/$ntb_crc.py");
 $heading = substr($python_file[11], 4);
 $line_num = 11;
 $desc = "";
