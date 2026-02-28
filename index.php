@@ -8,8 +8,9 @@ if (!is_file($python_file)) {
 
 $input = $_POST['input'] ?? "1 2 3 4&#10;1 3 4 5&#10;1 2 4 5&#10;2 4 5 6";
 $properties = [
-  "under-closed", "semi-closed", "weakly-closed", "chordal", "closed",
-  "unit-interval", "traceable", "hamiltonian", "weakly-traceable", "weakly-hamiltonian"
+  "closed", "unit-interval", "under-closed", "semi-closed", "weakly-closed",
+  "weakly-traceable", "traceable", "weakly-hamiltonian", "hamiltonian",
+  "weakly-chordal", "skeleton-chordal", "chordal"
 ];
 $properties_translation = [
   "hamiltonian" => "Hamiltonian",
@@ -196,7 +197,7 @@ echo <<<EOT
       <li><a href="https://colab.research.google.com/github/martapavelka/scpc/blob/dev/scpc.ipynb">Source code on Google Colab</a> (developer version)</li>
       <li><a href="https://github.com/martapavelka/scpc">Source code on GitHub</a> (all versions)</li>
       <li>Current online version: $system_info</li>
-      <li>Author: Marta Pavelka, <a href="mailto:pavelka@math.miami.edu">pavelka@math.miami.edu</a></li>
+      <li>Author: Marta Pavelka, <a href="mailto:mp@math.ku.dk">mp@math.ku.dk</a></li>
     </ul>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
