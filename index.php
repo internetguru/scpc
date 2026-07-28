@@ -10,7 +10,7 @@ $input = $_POST['input'] ?? "1 2 3 4&#10;1 3 4 5&#10;1 2 4 5&#10;2 4 5 6";
 $properties = [
   "closed", "unit-interval", "under-closed", "semi-closed", "weakly-closed",
   "weakly-traceable", "traceable", "weakly-hamiltonian", "hamiltonian",
-  "weakly-chordal", "skeleton-chordal", "chordal"
+  "weakly-chordal", "skeleton-weakly-chordal", "chordal"
 ];
 $properties_translation = [
   "hamiltonian" => "Hamiltonian",
@@ -144,6 +144,106 @@ foreach($properties as $property) {
   );
 }
 
+// Definitions of the available properties. Keys match the $properties slugs,
+// values are HTML with TeX (rendered client side by MathJax). Single quoted
+// strings only, so that neither PHP nor the heredoc below eats the backslashes
+// and the dollar signs.
+$definitions = [
+  'closed' =>
+    'A pure $d$-dimensional simplicial complex $\Delta$ is closed if there exists a vertex'
+    .' labeling of $\Delta$ such that for every pair of $d$-faces $F=a_0a_1\dots a_d$ and'
+    .' $G=b_0b_1\dots b_d$ (written in increasing order) with $a_i=b_i$ for some $i$, the complex'
+    .' $\Delta$ contains the full $d$-skeleton of the simplex on $F \cup G$.',
+  'unit-interval' =>
+    'Let $\Delta$ be a pure $d$-dimensional simplicial complex with $n$ vertices. The complex'
+    .' $\Delta$ is called unit-interval if there exists a labeling $1, \ldots, n$ of its vertices'
+    .' such that for any $d$-face $F=a_0 a_1 \cdots a_d$ (written in increasing order) of $\Delta$,'
+    .' the complex $\Delta$ contains the whole $d$-skeleton of the simplex with vertex set'
+    .' $\{a_0, a_0 + 1, a_0 + 2, \ldots, a_d\}$.',
+  'under-closed' =>
+    'A pure $d$-dimensional simplicial complex $\Delta$ is under-closed if there is a vertex'
+    .' labeling of $\Delta$ such that for every $d$-face $F=a_0a_1\dots a_d$ (written in increasing'
+    .' order) the complex $\Delta$ contains all faces of the form $a_0b_1b_2\dots b_d$ with'
+    .' $b_1\leq a_1$, $b_2\leq a_2$, $\dots$, $b_d\leq a_d$.',
+  'semi-closed' =>
+    'A pure $d$-dimensional simplicial complex $\Delta$ is semi-closed if there is a vertex'
+    .' labeling of $\Delta$ such that for every $d$-face $F=a_0a_1\dots a_d$ (written with'
+    .' $a_0 &lt; a_1 &lt; \dots &lt; a_d$) at least one of the following conditions hold:'
+    .'<ol>'
+    .'<li>the complex $\Delta$ contains all faces of the form $a_0b_1b_2\dots b_d$ with'
+    .' $b_1\leq a_1$, $b_2\leq a_2$, $\dots$, $b_d\leq a_d$, or</li>'
+    .'<li>the complex $\Delta$ contains all faces of the form $i_0i_1 \dots i_{d-1}a_d$ with'
+    .' $i_0\geq a_0$, $i_1\geq a_1$, $\dots$, $i_{d-1} \geq a_{d-1}$.</li>'
+    .'</ol>',
+  'weakly-closed' =>
+    'A pure $d$-dimensional simplicial complex $\Delta$ is weakly-closed if there is a vertex'
+    .' labeling of $\Delta$ such that for every $d$-face $F=a_0a_1\dots a_d$ (written with'
+    .' $a_0 &lt; a_1 &lt; \dots &lt; a_d$) and for every $g\notin F$ with $a_0 &lt; g &lt; a_d$'
+    .' there exists a $d$-face $G$ adjacent to $F$ containing $g$ such that'
+    .' either $\max G \neq \max F$ or'
+    .' $\min G \neq \min F$.',
+  'weakly-traceable' =>
+    'A pure $d$-dimensional simplicial complex $\Delta$ on $n$ vertices is weakly-traceable if'
+    .' there is a vertex labeling of $\Delta$ such that $\Delta$ contains a subset $H_{i_1}$,'
+    .' $H_{i_2}$, $\dots$, $H_{i_k}$ of $\{H_1, H_2 \dots , H_{n-d} \}$ that'
+    .'<ol>'
+    .'<li>covers all the vertices and</li>'
+    .'<li>$H_{i_{j}}$ is incident (non-empty intersection) to $H_{i_{j+1}}$ for each'
+    .' $j \in \{1, 2, \dots , k-1\}$.</li>'
+    .'</ol>'
+    .'<p>Here $H_i$ is the facet $(i, i+1, \dots , i+d)$.</p>',
+  'traceable' =>
+    'A pure $d$-dimensional simplicial complex $\Delta$ on $n$ vertices is traceable if there is a'
+    .' vertex labeling of $\Delta$ such that $\Delta$ contains facets $H_1$, $H_2$, $\dots$,'
+    .' $H_{n-d}$. Here $H_i$ is the facet $(i, i+1, \dots , i+d)$.',
+  'weakly-hamiltonian' =>
+    'A pure $d$-dimensional simplicial complex $\Delta$ on $n$ vertices is weakly-Hamiltonian if it'
+    .' has a labeling such that $\Delta$ contains a subset $H_{i_1}$, $\dots$, $H_{i_k}$ of'
+    .' $\{H_1, \dots , H_n\}$ that'
+    .'<ol>'
+    .'<li>altogether cover all vertices,</li>'
+    .'<li>$H_{i_j}$ is incident to $H_{i_{j+1}}$ for each $j \in \{1, \dots , k-1\}$,</li>'
+    .'<li>$H_{i_k}$ is incident to $H_{i_1}$.</li>'
+    .'</ol>'
+    .'<p>Here $H_i$ is the facet $(i , i+1 , \dots , i+d)$ using modulo $n$ for anything greater'
+    .' than $n$. For instance, $H_n = (1,2,3, \dots d, n)$.</p>',
+  'hamiltonian' =>
+    'A pure $d$-dimensional simplicial complex $\Delta$ on $n$ vertices is Hamiltonian if there is'
+    .' a vertex labeling of $\Delta$ such that $\Delta$ contains facets $H_1$, $H_2$, $\dots$,'
+    .' $H_{n}$. Here $H_i$ is the facet $(i , i+1 , \dots , i+d)$ using modulo $n$ for anything'
+    .' greater than $n$. For instance, $H_n = (1,2,3, \dots d, n)$.',
+  'weakly-chordal' =>
+    'A pure $d$-dimensional simplicial complex $\Delta$ on $n$ vertices is weakly-chordal if it has'
+    .' a labeling such that, for every two facets $F \ne G$ in $\Delta$ with the same maximum,'
+    .' $\Delta$ also contains some facet $H$ such that $H \subseteq F \cup G - \{ \max F\}$.',
+  'skeleton-weakly-chordal' =>
+    'A pure $d$-dimensional simplicial complex $\Delta$ is skeleton-weakly-chordal if there is a'
+    .' vertex labeling of $\Delta$ such that the $k$-skeleton of $\Delta$ meets the weakly-chordal'
+    .' condition for all $k\in \{1, 2, \dots, d\}$.',
+  'chordal' =>
+    'A pure $d$-dimensional simplicial complex $\Delta$ is E-chordal if there is a vertex labeling'
+    .' of $\Delta$ such that for every pair of $d$-faces $F=a_0a_1\dots a_d$ and'
+    .' $G=b_0b_1\dots b_d$ (written in increasing order) with $a_d=b_d$, the complex $\Delta$'
+    .' contains the whole $d$-skeleton of the simplex on $F \cup G$.',
+];
+$definition_titles = [
+  'chordal' => 'chordal (E-chordal)',
+];
+
+$definition_list = "";
+foreach ($properties as $property) {
+  if (!isset($definitions[$property])) {
+    continue;
+  }
+  $definition_list .= sprintf(
+    '<details><summary>%s</summary><div>%s</div></details>',
+    $definition_titles[$property]
+      ?? $properties_translation[$property]
+      ?? $property,
+    $definitions[$property]
+  );
+}
+
 $info = [
     'version' => trim(file_get_contents('VERSION')),
 ];
@@ -158,6 +258,16 @@ $info += [
     'commit' => substr($commit, 0, 7),
 ];
 $system_info = implode(' ', $info);
+
+// Kept out of the heredoc below: the delimiters contain dollar signs.
+$mathjax = '<script>'
+  .'window.MathJax = {'
+  .'tex: {inlineMath: [["$", "$"], ["\\\\(", "\\\\)"]]},'
+  .'options: {enableMenu: false}'
+  .'};'
+  .'</script>'
+  .'<script id="MathJax-script" async'
+  .' src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>';
 
 $commit_id = substr(shell_exec("git rev-parse HEAD"), 0, 7);
 $python_file = file("build/$ntb_crc.py");
@@ -175,6 +285,12 @@ echo <<<EOT
     <title>$heading</title>
     <meta charset='UTF-8'/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      details { margin: .4em 0; }
+      details > summary { cursor: pointer; font-weight: bold; }
+      details > div { margin: .3em 0 .8em 1.2em; }
+    </style>
+    $mathjax
   </head>
   <body>
     <h1>$heading</h1>
@@ -192,6 +308,8 @@ echo <<<EOT
     </form>
     <h2>Program Output</h2>
     <pre><code>$output</code></pre>
+    <h2>Definitions of the available properties</h2>
+    $definition_list
     <hr/>
     <ul>
       <li><a href="https://colab.research.google.com/github/martapavelka/scpc/blob/dev/scpc.ipynb">Source code on Google Colab</a> (developer version)</li>
